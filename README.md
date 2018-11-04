@@ -4,6 +4,9 @@ The Offer service is a REST based service that allows merchants to create, cance
 
 The project was developed using TDD. The system architecture is heavily inspired by Robert C. Martin's Clean Architecture, a use case driven approach. I developed this program with the mindset that it is apart of a large system and attempted to make it as modular as possible.
 
+The APIs invoke a single **Use Case**. The **Use Case** constructs and acts over one to many **Entities** and in doing so also talks to the **Repository**.
+When an API needs to return a result, a **Presenter** is passed into the API.
+
 There are 3 public APIs
 - Create Offer
 ```
@@ -51,9 +54,6 @@ HTTP Status 200
   status: "ACTIVE|EXPIRED"
 }
 ```
-
-The APIs invoke a single **Use Case**. The **Use Case** constructs and acts over one to many **Entities** and in doing so also talks to the **Repository**.
-When an API needs to return a result, a **Presenter** is passed into the API.
 
 ## Project dependencies
 This project uses Java 8 with Spring Boot and Swagger for API documentation. 
