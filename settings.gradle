@@ -1,0 +1,8 @@
+rootProject.name = 'offer-service'
+include 'Ports'
+include 'Entities'
+include 'UseCases'
+include 'DBAdapterJpa'
+include 'Presenters'
+include 'Application'
+
