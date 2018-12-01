@@ -110,3 +110,5 @@ To run the application, from the root of the project run:
 ```shell
 gradlew bootRun
 ```
+
+View the [Swagger documentation](http://localhost:8080/swagger-ui.html#/offer)
