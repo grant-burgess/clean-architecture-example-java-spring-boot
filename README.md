@@ -27,11 +27,7 @@ POST /offer-service/api/v1/offers
 Response
 HTTP Status 201 Created
 {
-  id: "12c3009d-046d-411c-85eb-6e379e2f5d2a",
-  "links": [ {
-    "rel": "self",
-    "href": "http://localhost:8080/offer-service/api/v1/offers/12c3009d-046d-411c-85eb-6e379e2f5d2a"
-  } ]
+  id: "12c3009d-046d-411c-85eb-6e379e2f5d2a"
 }
 ```
 - Cancel Offer 
@@ -99,7 +95,7 @@ HTTP Status 404 Not Found
 ```
 
 ## Project dependencies
-This project uses Java 8 with Spring Boot and Swagger for API documentation. 
+This project uses Java 8 with Spring Boot, H2 database and Swagger for API documentation. 
 Tests were written with JUnit4. 
 
 ## Running the application
