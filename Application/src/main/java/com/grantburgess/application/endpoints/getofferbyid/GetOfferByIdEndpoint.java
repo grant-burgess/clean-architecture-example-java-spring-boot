@@ -6,6 +6,8 @@ import com.grantburgess.presenters.OfferViewModel;
 import com.grantburgess.usecases.get.OfferResponse;
 import com.grantburgess.usecases.get.offerbyid.GetOfferByIdInputBoundary;
 import com.grantburgess.usecases.get.offerbyid.GetOfferRequest;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +28,8 @@ public class GetOfferByIdEndpoint implements BaseEndpoint {
     }
 
     @GetMapping("/{offerId}")
-    public ResponseEntity execute(@PathVariable(value = "offerId") String offerId) {
+    @ApiOperation(value = "Get offer by ID", response = OfferViewModel.class)
+    public ResponseEntity execute(@ApiParam(value = "ID of the offer that needs to be fetched", allowableValues = "valid UUID", required = true) @PathVariable(value = "offerId") String offerId) {
         OfferResponse responseModel = useCase.execute(GetOfferRequest.builder().id(UUID.fromString(offerId)).build());
         if (responseModel == null)
             return ResponseEntity.notFound().build();
