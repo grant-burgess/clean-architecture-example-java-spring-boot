@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 public class BaseOfferPresenter {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE;
 
+    protected BaseOfferPresenter() { }
+
     public static OfferViewModel mapToOfferViewModel(OfferResponse responseModel) {
         return OfferViewModel
                 .builder()

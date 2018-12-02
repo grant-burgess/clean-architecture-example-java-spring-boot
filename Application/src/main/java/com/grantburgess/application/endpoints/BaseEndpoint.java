@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public interface BaseEndpoint {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    default ResponseEntity<?> handleException(MethodArgumentNotValidException exception) {
+    default ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException exception) {
         List<String> errors = exception.getBindingResult().getFieldErrors().stream()
                 .map(x -> MessageFormat.format("`{0}` {1}",
                         x.getField(), x.getDefaultMessage()))

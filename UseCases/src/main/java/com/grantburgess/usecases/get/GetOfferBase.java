@@ -5,6 +5,8 @@ import com.grantburgess.usecases.Clock;
 import com.grantburgess.usecases.get.OfferResponse;
 
 public abstract class GetOfferBase {
+    protected GetOfferBase() { }
+
     public static OfferResponse makeOfferResponse(Offer offer, Clock clock) {
         OfferResponse.Status offerStatus = computeStatus(offer, clock);
         return new OfferResponse(

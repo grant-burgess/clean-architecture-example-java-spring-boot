@@ -21,12 +21,12 @@ import java.text.MessageFormat;
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String MESSAGE_NOT_READABLE_ERROR_MESSAGE_PATTERN = "Invalid format for property `{0}'";
-    public static final String DEFAULT_CLIENT_ERROR_MESSAGE = "A client error occurred";
-    public static final String DEFAULT_NOT_FOUND_MESSAGE = "We could not find that entity";
+    private static final String DEFAULT_CLIENT_ERROR_MESSAGE = "A client error occurred";
+    private static final String DEFAULT_NOT_FOUND_MESSAGE = "We could not find that entity";
 
     @ExceptionHandler
     @ResponseBody
-    public ResponseEntity<?> handleControllerException(final HttpServletRequest request, final Throwable throwable) {
+    public ResponseEntity<ErrorResponse> handleControllerException(final HttpServletRequest request, final Throwable throwable) {
         if (throwable instanceof OfferGateway.BadRequest) {
             return getErrorResponseForStatus(throwable, HttpStatus.BAD_REQUEST, DEFAULT_CLIENT_ERROR_MESSAGE);
         } else if (throwable instanceof OfferGateway.NotFound) {
@@ -36,7 +36,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         }
     }
 
-    private ResponseEntity<?> getErrorResponseForStatus(Throwable ex, HttpStatus httpStatus, String defaultMessage) {
+    private ResponseEntity<ErrorResponse> getErrorResponseForStatus(Throwable ex, HttpStatus httpStatus, String defaultMessage) {
         String message = ErrorMessageMap.errors.getOrDefault(ex.getClass(), defaultMessage);
         return new ResponseEntity<>(
                 ErrorResponse
@@ -47,7 +47,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         );
     }
 
-    private ResponseEntity<Object> getDefaultErrorResponse(final Throwable throwable) {
+    private ResponseEntity<ErrorResponse> getDefaultErrorResponse(final Throwable throwable) {
         logger.fatal("Unhandled exception ", throwable);
         return new ResponseEntity<>(
                 ErrorResponse
