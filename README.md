@@ -7,7 +7,7 @@ The project was developed using TDD. The system architecture is heavily inspired
 The APIs invoke a single **Use Case**. The **Use Case** constructs and acts over one to many **Entities** and in doing so also talks to a **Gateway** more commonly known as **Repository** or **Adapters**.
 When an API needs to return a result, a **Presenter** is passed into the API. As we pass through the various layers we use separate models. **Use Cases** produce **Response Models**, **Presenters** produce **View Models**.
 
-For the delivery mechanism I used Spring's REST controllers to deliver the JSON with hypermedia links
+For the delivery mechanism I used Spring's REST controllers to deliver JSON
 
 There are 4 public APIs
 - Create Offer
