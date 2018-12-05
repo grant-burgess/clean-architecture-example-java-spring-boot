@@ -5,4 +5,5 @@ include 'UseCases'
 include 'DBAdapterJpa'
 include 'Presenters'
 include 'Application'
+include 'ApplicationModule'
 
