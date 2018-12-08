@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface OfferRepository extends CrudRepository<OfferData, String> {
+public interface OfferRepository extends CrudRepository<OfferData, UUID> {
     List<OfferData> findByCancelledDateIsNull();
     Optional<OfferData> findByIdAndCancelledDateIsNull(UUID id);
     boolean existsByNameAndCancelledDateIsNull(String name);

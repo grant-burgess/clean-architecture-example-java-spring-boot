@@ -12,9 +12,14 @@ repositories {
 }
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.1.0.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa:2.1.0.RELEASE')
+    compileOnly('org.projectlombok:lombok:1.18.2')
+
     compile project(':Ports')
     compile project(':Entities')
-    compileOnly('org.projectlombok:lombok:1.18.2')
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    testCompile('junit:junit:4.+')
+    testCompile('com.h2database:h2:+')
+    testCompile('org.springframework.boot:spring-boot-starter-test:2.1.0.RELEASE')
+    testCompile('org.hamcrest:hamcrest-library:1.3')
 }
