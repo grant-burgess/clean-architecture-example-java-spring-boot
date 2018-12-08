@@ -38,10 +38,6 @@ dependencies {
 
 	compile project(':ApplicationModule')
 	compile project(':Ports')
-	compile project(':Entities')
-	compile project(':UseCases')
-	compile project(':Presenters')
-	compile project(':DBAdapterJpa')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
