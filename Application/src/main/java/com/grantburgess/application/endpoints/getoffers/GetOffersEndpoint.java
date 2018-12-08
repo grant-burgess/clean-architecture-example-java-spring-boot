@@ -1,11 +1,11 @@
 package com.grantburgess.application.endpoints.getoffers;
 
 import com.grantburgess.application.endpoints.BaseEndpoint;
-import com.grantburgess.presenters.OffersOutputBoundary;
-import com.grantburgess.presenters.OffersViewModel;
-import com.grantburgess.usecases.get.offers.GetOfferInputBoundary;
-import com.grantburgess.usecases.get.offers.GetOffersRequest;
-import com.grantburgess.usecases.get.offers.OffersResponse;
+import com.grantburgess.ports.presenters.OffersOutputBoundary;
+import com.grantburgess.ports.presenters.OffersViewModel;
+import com.grantburgess.ports.usescases.get.offers.GetOfferInputBoundary;
+import com.grantburgess.ports.usescases.get.offers.GetOffersRequest;
+import com.grantburgess.ports.usescases.get.offers.OffersResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

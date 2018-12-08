@@ -2,7 +2,9 @@ package com.grantburgess.usecases.canceloffer;
 
 import com.grantburgess.entities.Offer;
 import com.grantburgess.ports.database.OfferGateway;
-import com.grantburgess.usecases.Clock;
+import com.grantburgess.ports.usescases.Clock;
+import com.grantburgess.ports.usescases.canceloffer.CancelOfferInputBoundary;
+import com.grantburgess.ports.usescases.canceloffer.CancelOfferRequest;
 
 public class CancelOffer implements CancelOfferInputBoundary {
     private final OfferGateway offerGateway;

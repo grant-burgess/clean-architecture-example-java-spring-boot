@@ -3,7 +3,10 @@ package com.grantburgess.usecases.addoffer;
 import com.grantburgess.entities.Offer;
 import com.grantburgess.entities.Offer.Money;
 import com.grantburgess.ports.database.OfferGateway;
-import com.grantburgess.usecases.Clock;
+import com.grantburgess.ports.usescases.Clock;
+import com.grantburgess.ports.usescases.addoffer.AddOfferInputBoundary;
+import com.grantburgess.ports.usescases.addoffer.AddOfferRequest;
+import com.grantburgess.ports.usescases.addoffer.NewOfferResponse;
 
 import java.util.UUID;
 

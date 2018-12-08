@@ -1,7 +1,8 @@
 package com.grantburgess.presenters;
 
-import com.grantburgess.usecases.get.OfferResponse;
-import com.grantburgess.usecases.get.offers.OffersResponse;
+import com.grantburgess.ports.presenters.OffersViewModel;
+import com.grantburgess.ports.usescases.get.OfferResponse;
+import com.grantburgess.ports.usescases.get.offers.OffersResponse;
 import org.junit.Test;
 
 import java.math.BigDecimal;

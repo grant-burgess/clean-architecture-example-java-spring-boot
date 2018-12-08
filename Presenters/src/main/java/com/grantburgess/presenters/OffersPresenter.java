@@ -1,6 +1,8 @@
 package com.grantburgess.presenters;
 
-import com.grantburgess.usecases.get.offers.OffersResponse;
+import com.grantburgess.ports.presenters.OffersOutputBoundary;
+import com.grantburgess.ports.presenters.OffersViewModel;
+import com.grantburgess.ports.usescases.get.offers.OffersResponse;
 
 public class OffersPresenter extends BaseOfferPresenter implements OffersOutputBoundary {
     private OffersViewModel viewModel;

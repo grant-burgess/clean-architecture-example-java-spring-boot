@@ -1,8 +1,8 @@
 package com.grantburgess.usecases.get;
 
 import com.grantburgess.entities.Offer;
-import com.grantburgess.usecases.Clock;
-import com.grantburgess.usecases.get.OfferResponse;
+import com.grantburgess.ports.usescases.Clock;
+import com.grantburgess.ports.usescases.get.OfferResponse;
 
 public abstract class GetOfferBase {
     protected GetOfferBase() { }

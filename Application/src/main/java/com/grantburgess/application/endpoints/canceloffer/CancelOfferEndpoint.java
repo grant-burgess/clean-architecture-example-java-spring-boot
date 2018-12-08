@@ -1,8 +1,8 @@
 package com.grantburgess.application.endpoints.canceloffer;
 
 import com.grantburgess.application.endpoints.BaseEndpoint;
-import com.grantburgess.usecases.canceloffer.CancelOfferInputBoundary;
-import com.grantburgess.usecases.canceloffer.CancelOfferRequest;
+import com.grantburgess.ports.usescases.canceloffer.CancelOfferInputBoundary;
+import com.grantburgess.ports.usescases.canceloffer.CancelOfferRequest;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

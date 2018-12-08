@@ -1,6 +1,7 @@
 package com.grantburgess.presenters;
 
-import com.grantburgess.usecases.get.OfferResponse;
+import com.grantburgess.ports.presenters.OfferViewModel;
+import com.grantburgess.ports.usescases.get.OfferResponse;
 
 import java.time.format.DateTimeFormatter;
 

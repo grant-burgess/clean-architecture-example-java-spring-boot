@@ -1,6 +1,6 @@
 package com.grantburgess.usecases.testdoubles;
 
-import com.grantburgess.usecases.Clock;
+import com.grantburgess.ports.usescases.Clock;
 
 import java.time.LocalDate;
 

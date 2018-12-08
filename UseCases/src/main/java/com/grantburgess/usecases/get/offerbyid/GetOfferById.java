@@ -2,9 +2,11 @@ package com.grantburgess.usecases.get.offerbyid;
 
 import com.grantburgess.entities.Offer;
 import com.grantburgess.ports.database.OfferGateway;
-import com.grantburgess.usecases.Clock;
+import com.grantburgess.ports.usescases.Clock;
 import com.grantburgess.usecases.get.GetOfferBase;
-import com.grantburgess.usecases.get.OfferResponse;
+import com.grantburgess.ports.usescases.get.OfferResponse;
+import com.grantburgess.ports.usescases.get.offerbyid.GetOfferByIdInputBoundary;
+import com.grantburgess.ports.usescases.get.offerbyid.GetOfferRequest;
 
 public class GetOfferById extends GetOfferBase implements GetOfferByIdInputBoundary {
     private final OfferGateway offerGateway;

@@ -1,6 +1,7 @@
 package com.grantburgess.presenters;
 
-import com.grantburgess.usecases.get.OfferResponse;
+import com.grantburgess.ports.presenters.OfferViewModel;
+import com.grantburgess.ports.usescases.get.OfferResponse;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -10,7 +11,6 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
 
 public class OfferPresenterTest {
     private static final UUID ID = UUID.randomUUID();
