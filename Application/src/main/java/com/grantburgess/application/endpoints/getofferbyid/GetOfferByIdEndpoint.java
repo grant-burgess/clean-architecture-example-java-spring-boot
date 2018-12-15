@@ -3,7 +3,6 @@ package com.grantburgess.application.endpoints.getofferbyid;
 import com.grantburgess.application.endpoints.BaseEndpoint;
 import com.grantburgess.ports.presenters.OfferOutputBoundary;
 import com.grantburgess.ports.presenters.OfferViewModel;
-import com.grantburgess.ports.usescases.get.OfferResponse;
 import com.grantburgess.ports.usescases.get.offerbyid.GetOfferByIdInputBoundary;
 import com.grantburgess.ports.usescases.get.offerbyid.GetOfferRequest;
 import io.swagger.annotations.ApiOperation;
@@ -30,11 +29,7 @@ public class GetOfferByIdEndpoint implements BaseEndpoint {
     @GetMapping("/{offerId}")
     @ApiOperation(value = "Get offer by ID", response = OfferViewModel.class)
     public ResponseEntity execute(@ApiParam(value = "ID of the offer that needs to be fetched", allowableValues = "valid UUID", required = true) @PathVariable(value = "offerId") String offerId) {
-        OfferResponse responseModel = useCase.execute(GetOfferRequest.builder().id(UUID.fromString(offerId)).build());
-        if (responseModel == null)
-            return ResponseEntity.notFound().build();
-
-        presenter.present(responseModel);
+        useCase.execute(GetOfferRequest.builder().id(UUID.fromString(offerId)).build());
 
         return ResponseEntity.ok(presenter.getViewModel());
     }

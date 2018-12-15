@@ -6,12 +6,18 @@ import com.grantburgess.application.endpoints.addoffer.AddOfferEndpoint;
 import com.grantburgess.application.endpoints.canceloffer.CancelOfferEndpoint;
 import com.grantburgess.application.endpoints.getofferbyid.GetOfferByIdEndpoint;
 import com.grantburgess.application.endpoints.getoffers.GetOffersEndpoint;
+import com.grantburgess.application.exception.ErrorMessageMap;
 import com.grantburgess.database.jpa.repositories.OfferRepository;
-import com.grantburgess.ports.presenters.*;
+import com.grantburgess.ports.database.OfferGateway;
+import com.grantburgess.ports.presenters.OfferCreatedOutputBoundary;
+import com.grantburgess.ports.presenters.OfferCreatedViewModel;
+import com.grantburgess.ports.presenters.OfferOutputBoundary;
+import com.grantburgess.ports.presenters.OfferViewModel;
+import com.grantburgess.ports.presenters.OffersOutputBoundary;
+import com.grantburgess.ports.presenters.OffersViewModel;
 import com.grantburgess.ports.usescases.Clock;
 import com.grantburgess.ports.usescases.addoffer.AddOfferInputBoundary;
 import com.grantburgess.ports.usescases.canceloffer.CancelOfferInputBoundary;
-import com.grantburgess.ports.usescases.get.OfferResponse;
 import com.grantburgess.ports.usescases.get.offerbyid.GetOfferByIdInputBoundary;
 import com.grantburgess.ports.usescases.get.offers.GetOfferInputBoundary;
 import org.junit.Before;
@@ -34,7 +40,7 @@ import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -130,7 +136,7 @@ public class EndpointTests {
     public void can_get_offer_by_id() throws Exception {
         String id = UUID.randomUUID().toString();
         OfferViewModel offerViewModel = buildOfferViewModel(id, NAME, DESCRIPTION, PRICE, CURRENCY, START_DATE, END_DATE, STATUS);
-        when(getOfferByIdInputBoundary.execute(any())).thenReturn(new OfferResponse());
+        doNothing().when(getOfferByIdInputBoundary).execute(any());
         when(offerOutputBoundary.getViewModel()).thenReturn(offerViewModel);
         mockMvc.perform(
                 get("/api/v1/offers/{offerId}", id)
@@ -144,6 +150,16 @@ public class EndpointTests {
                 .andExpect(jsonPath("$.duration.startDate", is(equalTo(START_DATE))))
                 .andExpect(jsonPath("$.duration.endDate", is(equalTo(END_DATE))))
                 .andExpect(jsonPath("$.status", is(equalTo(STATUS))));
+    }
+
+    @Test
+    public void cannot_get_offer_by_id_when_offer_does_not_exist() throws Exception {
+        doThrow(OfferGateway.OfferNotFoundException.class).when(getOfferByIdInputBoundary).execute(any());
+        mockMvc.perform(
+                get("/api/v1/offers/{offerId}", UUID.randomUUID())
+        )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errors.[0]", is(equalTo(ErrorMessageMap.errors.get(OfferGateway.OfferNotFoundException.class)))));
     }
 
     @Test

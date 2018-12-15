@@ -8,6 +8,7 @@ import com.grantburgess.ports.usescases.Clock;
 import com.grantburgess.ports.usescases.get.OfferResponse;
 import com.grantburgess.usecases.get.offerbyid.GetOfferById;
 import com.grantburgess.usecases.testdoubles.ClockStub;
+import com.grantburgess.usecases.testdoubles.OfferPresenterSpy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,36 +34,32 @@ public class GetOfferByIdTest {
     private static final LocalDate CURRENT_DATE = LocalDate.of(2018, 01, 30);
 
     private Database database;
-    private Clock clock;
     private GetOfferById useCase;
+    private OfferPresenterSpy presenterSpy;
 
     private void assertOffer(
-            OfferResponse offerResponse,
             UUID id,
-            String name,
-            String description,
-            LocalDate startDate,
             LocalDate endDate,
-            String priceCurrency,
-            BigDecimal priceAmount,
             OfferResponse.Status status) {
-        assertThat(offerResponse,
+        assertThat(presenterSpy.getResponseModel(),
                 both(hasProperty("id", equalTo(id)))
-                        .and(hasProperty("name", equalTo(name)))
-                        .and(hasProperty("description", equalTo(description)))
-                        .and(hasProperty("startDate", equalTo(startDate)))
+                        .and(hasProperty("name", equalTo(GetOfferByIdTest.OFFER_NAME)))
+                        .and(hasProperty("description", equalTo(GetOfferByIdTest.OFFER_DESCRIPTION)))
+                        .and(hasProperty("startDate", equalTo(GetOfferByIdTest.OFFER_START_DATE)))
                         .and(hasProperty("endDate", equalTo(endDate)))
-                        .and(hasProperty("currency", equalTo(priceCurrency)))
-                        .and(hasProperty("amount", is(closeTo(priceAmount, BigDecimal.ZERO))))
+                        .and(hasProperty("currency", equalTo(GetOfferByIdTest.OFFER_PRICE_CURRENCY)))
+                        .and(hasProperty("amount", is(closeTo(GetOfferByIdTest.OFFER_PRICE_AMOUNT, BigDecimal.ZERO))))
                         .and(hasProperty("status", equalTo(status)))
         );
+        assertThat(presenterSpy.isOfferPresented(), is(true));
     }
 
     @Before
     public void setUp() {
         database = new InMemoryDatabase();
-        clock = new ClockStub(CURRENT_DATE);
-        useCase = new GetOfferById(database.offerGateway(), clock);
+        Clock clock = new ClockStub(CURRENT_DATE);
+        presenterSpy = new OfferPresenterSpy();
+        useCase = new GetOfferById(presenterSpy, database.offerGateway(), clock);
     }
 
     @Test(expected = OfferGateway.OfferNotFoundException.class)
@@ -77,11 +74,11 @@ public class GetOfferByIdTest {
         UUID offerId = database.offerGateway().add(new Offer(OFFER_NAME, OFFER_DESCRIPTION, OFFER_START_DATE, expiredEndDate, OFFER_PRICE));
 
         // WHEN
-        OfferResponse offerResponse = useCase.execute(GetOfferRequest.builder().id(offerId).build());
+        useCase.execute(GetOfferRequest.builder().id(offerId).build());
 
         // THEN
-        assertThat(offerResponse, is(not(nullValue())));
-        assertOffer(offerResponse, offerId, OFFER_NAME, OFFER_DESCRIPTION, OFFER_START_DATE, expiredEndDate, OFFER_PRICE_CURRENCY, OFFER_PRICE_AMOUNT, OfferResponse.Status.EXPIRED);
+        assertThat(presenterSpy.getResponseModel(), is(not(nullValue())));
+        assertOffer(offerId, expiredEndDate, OfferResponse.Status.EXPIRED);
     }
 
     @Test(expected = OfferGateway.OfferNotFoundException.class)
@@ -102,10 +99,10 @@ public class GetOfferByIdTest {
         UUID offerId = database.offerGateway().add(new Offer(OFFER_NAME, OFFER_DESCRIPTION, OFFER_START_DATE, OFFER_END_DATE, OFFER_PRICE));
 
         // WHEN
-        OfferResponse offerResponse = useCase.execute(GetOfferRequest.builder().id(offerId).build());
+        useCase.execute(GetOfferRequest.builder().id(offerId).build());
 
         // THEN
-        assertThat(offerResponse, is(not(nullValue())));
-        assertOffer(offerResponse, offerId, OFFER_NAME, OFFER_DESCRIPTION, OFFER_START_DATE, OFFER_END_DATE, OFFER_PRICE_CURRENCY, OFFER_PRICE_AMOUNT, OfferResponse.Status.ACTIVE);
+        assertThat(presenterSpy.getResponseModel(), is(not(nullValue())));
+        assertOffer(offerId, OFFER_END_DATE, OfferResponse.Status.ACTIVE);
     }
 }

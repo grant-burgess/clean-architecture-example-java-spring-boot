@@ -51,8 +51,8 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public GetOfferByIdInputBoundary getOfferByIdInputBoundary(Database database, Clock clock) {
-        return new GetOfferById(database.offerGateway(), clock);
+    public GetOfferByIdInputBoundary getOfferByIdInputBoundary(OfferOutputBoundary offerOutputBoundary, Database database, Clock clock) {
+        return new GetOfferById(offerOutputBoundary, database.offerGateway(), clock);
     }
 
     @Bean
