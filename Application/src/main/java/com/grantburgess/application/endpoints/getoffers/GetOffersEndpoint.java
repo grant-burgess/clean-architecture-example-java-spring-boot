@@ -5,7 +5,6 @@ import com.grantburgess.ports.presenters.OffersOutputBoundary;
 import com.grantburgess.ports.presenters.OffersViewModel;
 import com.grantburgess.ports.usescases.get.offers.GetOfferInputBoundary;
 import com.grantburgess.ports.usescases.get.offers.GetOffersRequest;
-import com.grantburgess.ports.usescases.get.offers.OffersResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +25,7 @@ public class GetOffersEndpoint implements BaseEndpoint {
     @GetMapping
     @ApiOperation(value = "Get offers", response = OffersViewModel.class)
     public ResponseEntity execute() {
-        OffersResponse responseModel = useCase.execute(new GetOffersRequest());
-        presenter.present(responseModel);
+        useCase.execute(new GetOffersRequest());
 
         return ResponseEntity.ok(presenter.getViewModel());
     }
