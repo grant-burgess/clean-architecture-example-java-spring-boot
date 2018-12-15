@@ -26,10 +26,6 @@ public class NewOfferRequest {
     private String name;
     @ApiModelProperty(notes = "Offer description", position = 2, example = "Offer description 01")
     private String description;
-    @NotNull
-    @Valid
-    @ApiModelProperty(notes = "Offer duratoin", position = 5)
-    private Duration duration;
     @NotBlank
     @NotNull
     @ApiModelProperty(notes = "Price currency", position = 3, example = "GBP")
@@ -37,6 +33,10 @@ public class NewOfferRequest {
     @Positive
     @ApiModelProperty(notes = "Price amount", position = 4, example = "10.00")
     private BigDecimal price;
+    @NotNull
+    @Valid
+    @ApiModelProperty(notes = "Offer duration", position = 5)
+    private Duration duration;
 
     @Getter
     @AllArgsConstructor

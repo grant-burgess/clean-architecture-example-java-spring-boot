@@ -5,7 +5,6 @@ import com.grantburgess.ports.presenters.OfferCreatedOutputBoundary;
 import com.grantburgess.ports.presenters.OfferCreatedViewModel;
 import com.grantburgess.ports.usescases.addoffer.AddOfferInputBoundary;
 import com.grantburgess.ports.usescases.addoffer.AddOfferRequest;
-import com.grantburgess.ports.usescases.addoffer.NewOfferResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +30,7 @@ public class AddOfferEndpoint implements BaseEndpoint {
     @PostMapping
     @ApiOperation(value = "Add offer", response = OfferCreatedViewModel.class)
     public ResponseEntity execute(@RequestBody @Valid NewOfferRequest request) {
-        NewOfferResponse responseModel = useCase.execute(
+        useCase.execute(
                 AddOfferRequest
                         .builder()
                         .name(request.getName())
@@ -42,7 +41,6 @@ public class AddOfferEndpoint implements BaseEndpoint {
                         .endDate(request.getDuration().getEndDate())
                         .build()
         );
-        presenter.present(responseModel);
 
         return ResponseEntity
                 .created(

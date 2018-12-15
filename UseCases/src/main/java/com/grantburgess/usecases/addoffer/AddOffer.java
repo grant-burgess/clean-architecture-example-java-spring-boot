@@ -3,6 +3,7 @@ package com.grantburgess.usecases.addoffer;
 import com.grantburgess.entities.Offer;
 import com.grantburgess.entities.Offer.Money;
 import com.grantburgess.ports.database.OfferGateway;
+import com.grantburgess.ports.presenters.OfferCreatedOutputBoundary;
 import com.grantburgess.ports.usescases.Clock;
 import com.grantburgess.ports.usescases.addoffer.AddOfferInputBoundary;
 import com.grantburgess.ports.usescases.addoffer.AddOfferRequest;
@@ -11,19 +12,22 @@ import com.grantburgess.ports.usescases.addoffer.NewOfferResponse;
 import java.util.UUID;
 
 public class AddOffer implements AddOfferInputBoundary {
+    private final OfferCreatedOutputBoundary presenter;
     private final OfferGateway offerGateway;
     private final Clock clock;
 
-    public AddOffer(OfferGateway offerGateway, Clock clock) {
+    public AddOffer(OfferCreatedOutputBoundary presenter, OfferGateway offerGateway, Clock clock) {
+        this.presenter = presenter;
         this.offerGateway = offerGateway;
         this.clock = clock;
     }
 
-    public NewOfferResponse execute(AddOfferRequest request) {
+    public void execute(AddOfferRequest request) {
         validateOffer(request);
         UUID id = addOffer(request);
 
-        return new NewOfferResponse(id);
+        NewOfferResponse responseModel = new NewOfferResponse(id);
+        presenter.present(responseModel);
     }
 
     private void validateOffer(final AddOfferRequest request) {

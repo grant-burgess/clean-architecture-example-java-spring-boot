@@ -61,8 +61,8 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public AddOfferInputBoundary addOfferInputBoundary(Database database, Clock clock) {
-        return new AddOffer(database.offerGateway(), clock);
+    public AddOfferInputBoundary addOfferInputBoundary(OfferCreatedOutputBoundary offerCreatedOutputBoundary, Database database, Clock clock) {
+        return new AddOffer(offerCreatedOutputBoundary, database.offerGateway(), clock);
     }
 
     @Bean

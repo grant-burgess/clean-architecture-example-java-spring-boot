@@ -4,14 +4,18 @@ import com.grantburgess.database.inmemory.InMemoryDatabase;
 import com.grantburgess.entities.Offer;
 import com.grantburgess.ports.database.Database;
 import com.grantburgess.ports.database.OfferGateway;
+import com.grantburgess.ports.presenters.OfferCreatedOutputBoundary;
 import com.grantburgess.usecases.addoffer.AddOffer;
 import com.grantburgess.usecases.testdoubles.ClockStub;
+import com.grantburgess.usecases.testdoubles.OfferCreatedPresenterSpy;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,11 +35,13 @@ public class AddOfferTest {
     private Database database;
     private AddOfferInputBoundary useCase;
     private AddOfferRequest request;
+    private OfferCreatedOutputBoundary presenter;
 
     @Before
     public void setUp() {
         database = new InMemoryDatabase();
-        useCase = new AddOffer(database.offerGateway(), new ClockStub(CURRENT_DATE));
+        presenter = new OfferCreatedPresenterSpy();
+        useCase = new AddOffer(presenter, database.offerGateway(), new ClockStub(CURRENT_DATE));
         request = new AddOfferRequest(OFFER_REQUEST_NAME, OFFER_REQUEST_DESCRIPTION, OFFER_REQUEST_START_DATE, OFFER_REQUEST_END_DATE, OFFER_REQUEST_AMOUNT, OFFER_REQUEST_CURRENCY);
     }
 
@@ -74,13 +80,19 @@ public class AddOfferTest {
 
     @Test
     public void can_add_offer() {
+        Pattern uuidPattern = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
+        OfferCreatedPresenterSpy presenterSpy = (OfferCreatedPresenterSpy) presenter;
         // WHEN
         useCase.execute(request);
         // THEN
+        assertThat(presenterSpy.isOfferPresented(), equalTo(true));
+        UUID offerId = presenterSpy.getResponseModel().getId();
+        assertThat(uuidPattern.matcher(offerId.toString()).matches(), equalTo(true));
         Collection<Offer> offers = database.offerGateway().getAllExcludingCancelled();
         assertThat(offers, hasSize(1));
         assertThat(offers,
-                hasItem(both(hasProperty("name", equalTo(OFFER_REQUEST_NAME)))
+                hasItem(both(hasProperty("id", equalTo(offerId)))
+                        .and(hasProperty("name", equalTo(OFFER_REQUEST_NAME)))
                         .and(hasProperty("description", equalTo(OFFER_REQUEST_DESCRIPTION)))
                         .and(hasProperty("startDate", equalTo(OFFER_REQUEST_START_DATE)))
                         .and(hasProperty("endDate", equalTo(OFFER_REQUEST_END_DATE)))
