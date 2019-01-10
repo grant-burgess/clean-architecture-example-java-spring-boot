@@ -1,4 +1,4 @@
-# Offer service [![Build Status](https://travis-ci.org/grant-burgess/offer-service.svg?branch=master)](https://travis-ci.org/grant-burgess/offer-service)
+# Offer service [![Build Status](https://travis-ci.org/grant-burgess/clean-architecture-java-spring-boot.svg?branch=master)](https://travis-ci.org/grant-burgess/clean-architecture-java-spring-boot)
 
 This is a REST based service that allows API consumers to create, cancel and query offers for merchants.
 
