@@ -1,5 +1,8 @@
 # Offer service [![Build Status](https://travis-ci.org/grant-burgess/clean-architecture-example-java-spring-boot.svg?branch=master)](https://travis-ci.org/grant-burgess/clean-architecture-example-java-spring-boot)
 
+_Dear stargazers, hope you like the project. Feel free to ask questions. I'll add some diagrams when I get a chance_
+
+
 This is a REST based service that allows API consumers to create, cancel and query offers for merchants.
 
 The project was developed using TDD. The system architecture is heavily inspired by Robert C. Martin's Clean Architecture, a use case driven approach. I developed this program with the mindset that this module is apart of a large system and attempted to make it as modular and pluggable as possible.
