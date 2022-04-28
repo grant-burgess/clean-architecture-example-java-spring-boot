@@ -1,4 +1,4 @@
-# Offer service [![Build Status](https://travis-ci.org/grant-burgess/clean-architecture-example-java-spring-boot.svg?branch=master)](https://travis-ci.org/grant-burgess/clean-architecture-example-java-spring-boot)
+# Offer service
 
 _Dear stargazers, hope you like the project. Feel free to ask questions. I'll add some diagrams when I get a chance_
 
